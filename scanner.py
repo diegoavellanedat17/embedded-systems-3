@@ -21,11 +21,10 @@ while True:
     received_data = ser.read()              #read serial port
     sleep(0.03)
     data_left = ser.inWaiting()             #check for remaining byte
-    received_data += ser.read(data_left)
-    try:    	
-    	received_data=received_data.decode('utf8')
-        qBLE_Data.put(received_data)
-    except Exception as e:
-    	print(e)
+    received_data += ser.read(data_left)	
+    received_data=received_data.decode('utf8')
+    qBLE_Data.put(received_data)
+
+    	
 
 

@@ -15,6 +15,7 @@ def serial_worker():
     print(item)
     # Aqui se hará append al archivo
 
+threading.Thread(target=serial_worker, daemon=True).start()
 
 while True:
     received_data = ser.read()              #read serial port

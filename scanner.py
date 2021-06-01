@@ -51,13 +51,13 @@ while True:
     received_data += ser.read(data_left)	
     received_data=received_data.decode('utf8')
 
-    print(received_data)
+    #print(received_data)
     try:
         json_data_incoming=json.loads(received_data)
         json_size=len(json_data_incoming['devices'])
         now = datetime.now()
-        now=str(now)
         now=now.strftime("%Y-%m-%d %H:%M:%S")
+        now=str(now)
         tiempo={"time":now}
         #print(json_data_incoming)
         json_data_incoming.update(tiempo)

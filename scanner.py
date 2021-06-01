@@ -51,7 +51,7 @@ while True:
     received_data += ser.read(data_left)	
     received_data=received_data.decode('utf8')
 
-    #print(received_data)
+    print(received_data)
     try:
         json_data_incoming=json.loads(received_data)
         json_size=len(json_data_incoming['devices'])
@@ -63,7 +63,8 @@ while True:
         json_data_incoming.update(tiempo)
         #print(json_data_incoming)
         qBLE_Data.put(json_data_incoming)
-    except:
+    except Exception as e:
+        print(e)
         print("entra en la excepcion")
         
 

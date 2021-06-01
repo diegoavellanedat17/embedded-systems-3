@@ -56,7 +56,7 @@ while True:
         json_data_incoming=json.loads(received_data)
         json_size=len(json_data_incoming['devices'])
         now = datetime.now()
-        now=now.strftime("%Y-%m-%d %H:%M:%S")
+        now=now.strftime("%Y-%m-%d-%H:%M:%S")
         now=str(now)
         tiempo={"time":now}
         #print(json_data_incoming)

@@ -17,6 +17,8 @@ then
 else
       echo "Si hay archivos"
       echo $ARCHIVO
+      #Encriptamos el archivo con la llave simetrica
+      openssl enc -aes-256-cbc -salt -in $ARCHIVO -out ../dataFolder/sendingData.enc -pass file:../aesKey.txt
 fi
 
 # if [ $CANTIDAD = 10 ];

@@ -24,11 +24,20 @@ Los siguientes corresponden a las herramientas a usar para implementar la funcio
 ## Transferencia de archivos
 Para la transferencia de archivos se haace a través del envío usando el comando scp entre los dos sistemas, para esto es necesario habilitar las claves y permitir la transferencia sin necesidad de la autenticación, esto se hace a través de los siguientes comandos. 
 
-En la maquina de origen
+En la maquina de origen:
 ```
 ssh-keygen -t rsa
 ```
-En la maquina de desitino
+En la maquina de destino:
 ```
 ssh-copy-id user@remote_machine
+```
+Para comprimir el directorio que se enviará se realiza por medio de:
+```
+tar -zcvf nombre-archivo-resultante.tar.gz nombre-directorio-o-archivo
+```
+
+Para descomprimir en la maquina receptora por medio de:
+```
+tar -xvzf archivo-comprimido.tar.gz
 ```

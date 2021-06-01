@@ -21,3 +21,14 @@ Los siguientes corresponden a las herramientas a usar para implementar la funcio
 - **Systemd**: Para ejecutar los servicios en segundo plano.
 
 
+## Transferencia de archivos
+Para la transferencia de archivos se haace a través del envío usando el comando scp entre los dos sistemas, para esto es necesario habilitar las claves y permitir la transferencia sin necesidad de la autenticación, esto se hace a través de los siguientes comandos. 
+
+En la maquina de origen
+```
+ssh-keygen -t rsa
+```
+En la maquina de desitino
+```
+ssh-copy-id user@remote_machine
+```

@@ -34,6 +34,8 @@ do
                   scp ../dataFolder/sendingData.enc pi@192.168.20.45:/home/pi/Documents/proyecto-final
                   #Transferir la llave
                   scp ../aesKey.txt.crypted pi@192.168.20.45:/home/pi/Documents/proyecto-final
+                  rm $ARCHIVO
+                  rm ../dataFolder/sendingData.enc
             fi
       else
             echo "host desconectado"

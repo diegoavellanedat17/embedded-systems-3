@@ -32,8 +32,10 @@ def serial_worker():
         if count>10:
             count=0
             now = datetime.now()
+            now=now.strftime("%Y-%m-%d %H:%M:%S")
             now=str(now)
-            filename=now+".txt"
+            path="../dataFolder/"
+            filename=path+'data'+now+".txt"
             os.rename('../dataFolder/temp.txt', filename) 
             
 

@@ -22,7 +22,7 @@ def serial_worker():
         item=qBLE_Data.get()
         print("entra en item")
         print(item)
-        file_object = open('temp.txt', 'a')
+        file_object = open('../dataFolder/temp.txt', 'a')
         file_object.write(str(item))
         file_object.write("\n")
         file_object.close()
@@ -34,7 +34,7 @@ def serial_worker():
             now = datetime.now()
             now=str(now)
             filename=now+".txt"
-            os.rename('temp.txt', filename) 
+            os.rename('../dataFolder/temp.txt', filename) 
             
 
             

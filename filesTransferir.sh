@@ -5,7 +5,8 @@
 #Guardar cualquier archivo que tenga el prefijo data
 # Verificar si existe algun archivo con prefijo data
 
-ARCHIVO=$(echo $(ls -t ../dataFolder/data* | head -1))# solo tomamos el ultimo archivo
+ARCHIVO=$(echo $(ls -t ../dataFolder/data* | head -1))
+# solo tomamos el ultimo archivo
 
 #si la variable tiene algose guarda, si no queda vacia
 

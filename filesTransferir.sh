@@ -9,7 +9,7 @@ HOST=$(echo $?)
 echo $HOST
 #La variable host toma el valor de 0 si esta activo o de 255 si esta inactivo 
 
-if [["$HOST" -eq 0];
+if [[ "$HOST" -eq  0 ]];
 then
       echo "host conectado"
       # Verificar si existe algun archivo con prefijo data

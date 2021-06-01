@@ -3,36 +3,44 @@
 #Cuando la carpeta tiene los 10 archivos la envía al segundo sistema
 
 
-#Lo primero en este script es verificar si se encuentra el host activo 
-ssh -q pi@192.168.20.45 exit
-HOST=$(echo $?)
-echo $HOST
-#La variable host toma el valor de 0 si esta activo o de 255 si esta inactivo 
+while :
+do
 
-if [[ "$HOST" -eq  0 ]];
-then
-      echo "host conectado"
-      # Verificar si existe algun archivo con prefijo data
-
-      ARCHIVO=$(echo $(ls -t ../dataFolder/data* | head -1))
-      # solo tomamos el ultimo archivo
-
-      #si la variable tiene algo se guarda, si no queda vacia
-
-      if [ -z "$ARCHIVO" ]
+      #Lo primero en este script es verificar si se encuentra el host activo 
+      ssh -q pi@192.168.20.45 exit
+      HOST=$(echo $?)
+      echo $HOST
+      #La variable host toma el valor de 0 si esta activo o de 255 si esta inactivo 
+      if [[ "$HOST" -eq  0 ]];
       then
-      #Si hay archivos, se toma el archivo y se prepara para la transferencia 
-            echo "No hay archivos"
+            echo "host conectado"
+            # Verificar si existe algun archivo con prefijo data
+
+            ARCHIVO=$(echo $(ls -t ../dataFolder/data* | head -1))
+            # solo tomamos el ultimo archivo
+
+            #si la variable tiene algo se guarda, si no queda vacia
+
+            if [ -z "$ARCHIVO" ]
+            then
+            #Si hay archivos, se toma el archivo y se prepara para la transferencia 
+                  echo "No hay archivos"
+            else
+                  echo "Si hay archivos"
+                  echo $ARCHIVO
+                  #Encriptamos el archivo con la llave simetrica
+                  openssl enc -aes-256-cbc -salt -in $ARCHIVO -out ../dataFolder/sendingData.enc -pass file:../aesKey.txt
+                  #Transferir los archivos
+                  scp ../dataFolder/sendingData.enc pi@192.168.20.45:/home/pi/Documents/proyecto-final
+                  #Transferir la llave
+                  scp ../aesKey.txt.crypted pi@192.168.20.45:/home/pi/Documents/proyecto-final
+            fi
       else
-            echo "Si hay archivos"
-            echo $ARCHIVO
-            #Encriptamos el archivo con la llave simetrica
-            openssl enc -aes-256-cbc -salt -in $ARCHIVO -out ../dataFolder/sendingData.enc -pass file:../aesKey.txt
-            scp ../dataFolder/sendingData.enc pi@192.168.20.45:/home/pi/Documents/proyecto-final
+            echo "host desconectado"
       fi
-else
-      echo "host desconectado"
-fi
+
+      sleep 10
+done
 
 # if [ $CANTIDAD = 10 ];
 # then

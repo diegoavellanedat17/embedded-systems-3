@@ -41,3 +41,13 @@ Para descomprimir en la maquina receptora por medio de:
 ```
 tar -xvzf archivo-comprimido.tar.gz
 ```
+## Encriptación de archivos para la tranferencia
+
+En el sistema de destino se generan las llaves publica y privada. 
+
+```
+openssl genrsa -out private.pem 512
+$openssl rsa -in private.pem -out public.pem -outform PEM -pubout
+
+```
+Luego se copia la llave pública en el transmisor

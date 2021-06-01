@@ -5,15 +5,17 @@
 #Guardar cualquier archivo que tenga el prefijo data
 # Verificar si existe algun archivo con prefijo data
 
-ARCHIVO=$(echo $(ls ../dataFolder/data*))
+ARCHIVO=$(echo $(ls -t ../dataFolder/data* | head -1))# solo tomamos el ultimo archivo
 
 #si la variable tiene algose guarda, si no queda vacia
 
 if [ -z "$ARCHIVO" ]
 then
+    #Si hay archivos, se toma el archivo y se prepara para la transferencia 
       echo "No hay archivos"
 else
       echo "Si hay archivos"
+      echo $ARCHIVO
 fi
 
 # if [ $CANTIDAD = 10 ];

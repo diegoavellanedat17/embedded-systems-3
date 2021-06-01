@@ -8,11 +8,16 @@ if [ $CANTIDAD = 10 ];
 then
 #La idea de aca es comprimir, encriptar y enviar el archivo
 tar -czvf ../data.tar.gz ../folderTest
+#encriptar con la llave simetrica 
+openssl enc -aes-256-cbc -salt -in ../data.tar.gz -out ../data.enc -pass file:../aesKey.txt
 echo 'Enviar por ssh al otro equipo'
 #Enviar al otro equipo
-scp ../data.tar.gz pi@192.168.20.45:/home/pi/Documents
+#scp ../data.tar.gz pi@192.168.20.45:/home/pi/Documents
+scp ../data.enc pi@192.168.20.45:/home/pi/Documents
+
 #remover el archivo 
-rm ../data.tar.gz
+#rm ../data.tar.gz
+
 
 else
 #La idea aca es seguir en el while

@@ -3,12 +3,17 @@
 #Cuando la carpeta tiene los 10 archivos la envía al segundo sistema
 
 #Guardar cualquier archivo que tenga el prefijo data
-# Verificar si existe algun archivo llamado asi
-FILE=../dataFolder/data*
-if [ -f "$FILE" ]; then
-    echo "$FILE exists."
-else 
-    echo "$FILE does not exist."
+# Verificar si existe algun archivo con prefijo data
+
+ARCHIVO=$(echo $(ls ../dataFolder/data*))
+
+#si la variable tiene algose guarda, si no queda vacia
+
+if [ -z "$ARCHIVO" ]
+then
+      echo "No hay archivos"
+else
+      echo "Si hay archivos"
 fi
 
 # if [ $CANTIDAD = 10 ];

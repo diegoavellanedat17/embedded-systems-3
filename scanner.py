@@ -32,7 +32,7 @@ def serial_worker():
         if count>10:
             count=0
             now = datetime.now()
-            now=now.strftime("%Y-%m-%d %H:%M:%S")
+            now=now.strftime("%Y-%m-%d%H:%M:%S")
             now=str(now)
             path="../dataFolder/"
             filename=path+'data'+now+".txt"
@@ -57,7 +57,7 @@ while True:
         json_size=len(json_data_incoming['devices'])
         now = datetime.now()
         #sin espacio para generar archivo
-        now=now.strftime("%Y-%m-%d%H:%M:%S")
+        now=now.strftime("%Y-%m-%d %H:%M:%S")
         now=str(now)
         tiempo={"time":now}
         #print(json_data_incoming)

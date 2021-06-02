@@ -1,4 +1,4 @@
-
+import paho.mqtt.client as mqtt
 from time import sleep
 import serial
 import time
@@ -7,11 +7,40 @@ import queue
 import json
 from datetime import datetime
 import os
+import config-secrets
 
+#funcion al conectarse al broker
+
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code" + str(rc))
+#funcion al publicar
+def on_publish(client, obj, mid):
+    print("mid: " + str(mid))
 
 #Tener un hilo para que cada que reciba un dato serial imprima en pantalla
 
-ser = serial.Serial ("/dev/ttyS0", 115200)    #Open port with baud rate
+mqttc = mqtt.Client(config.client_device)
+mqttc.on_connect = on_connect
+mqttc.on_publish = on_publish
+
+try:
+    mqttc.username_pw_set(config.user, config.password)
+    mqttc.connect(config.broker_address, config.port)
+    mqttc.loop_start()
+except Exception as e:
+    file_object = open('../dataFolder/MQTT_problem.txt', 'a')
+    file_object.write(str(e))
+    file_object.write("\n")
+    file_object.close()
+
+try:
+    ser = serial.Serial ("/dev/ttyS0", 115200)    #Open port with baud rate
+except Exception as e:
+    file_object = open('../dataFolder/SerialProblem.txt', 'a')
+    file_object.write(str(e))
+    file_object.write("\n")
+    file_object.close()
+
 
 qBLE_Data=queue.Queue()
 global count
@@ -30,6 +59,7 @@ def serial_worker():
         print(count)
         count=count+1 
         if count>10:
+            mqttc.publish(config.topic,"hola")
             count=0
             now = datetime.now()
             now=now.strftime("%Y-%m-%d%H:%M:%S")

@@ -7,7 +7,7 @@ import queue
 import json
 from datetime import datetime
 import os
-import config-secrets
+import config
 
 #funcion al conectarse al broker
 

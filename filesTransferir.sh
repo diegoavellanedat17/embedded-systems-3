@@ -34,7 +34,7 @@ do
                   scp ../dataFolder/sendingData.enc pi@192.168.20.45:/home/pi/Documents/proyecto-final
                   #Transferir la llave
                   scp ../aesKey.txt.crypted pi@192.168.20.45:/home/pi/Documents/proyecto-final
-                  rm $ARCHIVO
+                  rm -f $ARCHIVO
                   rm -f ../dataFolder/sendingData.enc
             fi
       else

@@ -23,6 +23,7 @@ mqttc = mqtt.Client(config.client_device)
 mqttc.on_connect = on_connect
 mqttc.on_publish = on_publish
 found=False
+flag=False
 
 try:
     mqttc.username_pw_set(config.user, config.password)
@@ -82,11 +83,16 @@ while True:
     data_left = ser.inWaiting()             #check for remaining byte
     received_data += ser.read(data_left)	
     received_data=received_data.decode('utf8')
-    #print(received_data)
-    if found:
+
+    if found and not flag:
         mqttc.publish(config.topic,"L1ON")
-    else:
+        flag=True
+    elif not found and flag:
         mqttc.publish(config.topic,"L1OFF")
+        flag=False
+    else:
+        pass
+    
     try:
         json_data_incoming=json.loads(received_data)
         json_size=len(json_data_incoming['devices'])

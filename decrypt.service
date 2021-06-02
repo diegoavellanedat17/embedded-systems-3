@@ -1,0 +1,14 @@
+[Unit]
+Description=Decifrar y generar
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/bash -u decrypt_check.sh
+WorkingDirectory=/home/pi/Documents/proyecto-final/embedded-systems-3
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=diego
+
+[Install]
+WantedBy=multi-user.target

@@ -22,6 +22,7 @@ def on_publish(client, obj, mid):
 mqttc = mqtt.Client(config.client_device)
 mqttc.on_connect = on_connect
 mqttc.on_publish = on_publish
+found=False
 
 try:
     mqttc.username_pw_set(config.user, config.password)
@@ -44,6 +45,7 @@ except Exception as e:
 
 qBLE_Data=queue.Queue()
 global count
+
 def serial_worker():
     count=0
     while True:
@@ -59,7 +61,7 @@ def serial_worker():
         print(count)
         count=count+1 
         if count>10:
-            mqttc.publish(config.topic,"hola")
+            
             count=0
             now = datetime.now()
             now=now.strftime("%Y-%m-%d%H:%M:%S")
@@ -80,8 +82,11 @@ while True:
     data_left = ser.inWaiting()             #check for remaining byte
     received_data += ser.read(data_left)	
     received_data=received_data.decode('utf8')
-
     #print(received_data)
+    if found:
+        mqttc.publish(config.topic,"L1ON")
+    else:
+        mqttc.publish(config.topic,"L1OFF")
     try:
         json_data_incoming=json.loads(received_data)
         json_size=len(json_data_incoming['devices'])
@@ -95,9 +100,12 @@ while True:
         #print(json_data_incoming)
         qBLE_Data.put(json_data_incoming)
         try:
+            found=False
             for i in range(json_size):
                 name_to_save=json_data_incoming['devices'][i]['name']
                 print(name_to_save)
+                if name_to_save=="DiegoPhone":
+                    found=True
         except:
             nombre= 'No devices'
     except Exception as e:

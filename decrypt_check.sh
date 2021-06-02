@@ -8,7 +8,7 @@ do
     if [ -f "$FILE" ]; then
         echo "$FILE exists."
         #Cuando el archivo existe se desecncripta
-        openssl enc -d -aes-256-cbc -in file.enc -out file.txt.decrypted -pass file:../aesKey.txt.decrypted
+        openssl enc -d -aes-256-cbc -in ../sendingData.enc -out file.txt.decrypted -pass file:../aesKey.txt.decrypted
         #tomo el archivo desencriptado y lo agrego a data
         echo $(cat ../file.txt.decrypted) >> ../ble_data.txt
         #Borrar los que ya no se necesiten

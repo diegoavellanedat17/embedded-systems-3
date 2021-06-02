@@ -94,6 +94,12 @@ while True:
         json_data_incoming.update(tiempo)
         #print(json_data_incoming)
         qBLE_Data.put(json_data_incoming)
+        try:
+            for i in range(json_size):
+                name_to_save=json_data_incoming['devices'][i]['name']
+                print(name_to_save)
+        except:
+            nombre= 'No devices'
     except Exception as e:
         print(e)
         print("entra en la excepcion")

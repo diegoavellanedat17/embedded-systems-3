@@ -1,9 +1,14 @@
 # Proyecto Final Sistemas Embebidos SCANIO
-
-> A continuación se explica el proyecto a grandes rasgos y en las posteriores secciones se entrará más en detalle. El objetivo del sistema es consolidar los datos del escaneo de dispositivos BLE que se encuentran haciendo "advertising" (anunciando su presencia) en el área de cobertura de nuestro dispositivo central. El funcionamiento es el siguiente: 
->La RPi Zero: Se encuentra conectada a través del puerto serial a un ESP32 el cual esta escaneando dispositivos BLE en una ventana de tiempo de 5 segundos. Este envía una trama en formato JSON de los dispositivos escaneados junto con el RSSI asociado. La RPI Zero tiene 2 servicios, el primero es el encargado de to  
-
 ![alt text](https://github.com/diegoavellanedat17/embedded-systems-3/blob/master/portadaFinal.JPG)
+
+A continuación se explica el proyecto a grandes rasgos y en las posteriores secciones se entrará más en detalle. El objetivo del sistema es consolidar los datos del escaneo de dispositivos BLE que se encuentran haciendo "advertising" (anunciando su presencia) en el área de cobertura de nuestro dispositivo central. El funcionamiento es el siguiente:
+
+La RPi Zero: Se encuentra conectada a través del puerto serial a un ESP32 el cual esta escaneando dispositivos BLE en una ventana de tiempo de 5 segundos. Este envía una trama en formato JSON de los dispositivos escaneados junto con el RSSI asociado. La RPI Zero tiene 2 servicios, el primero es el encargado de recibir los datos a través del serial y generar archivos en una carpeta. El segundo servicio valida que tenga una conexión con la segunda Raspberry Pi, si puede conectarse a través de ssh y tiene archivos por enviar, los encripta y luego los envía a través de SCP.
+
+La segunda Raspberry tiene un servicio que identifica si tiene archivos nuevos, en caso de que existan, primero desencripta la llave simetrica con la llave publica asimetrica y posteriormente con la llave simetrica decifrada, desencripta el archivo y hace append a un archivo llamado ble_data.txt
+
+
+
 
 > En el siguiente diagrama de se representan los elementos para el proyecto final. Los tags el RSSI del enlace y el hardware que los escanea se tomará como un bloque y se simularán
 las tramas, estas se envian de manera serial al la RPI. Una vez recibidas las tramas en se ingresan en en una cola para ejecutar en procesos independientes. Allí se realiza el procesamiento 
@@ -24,6 +29,9 @@ Los siguientes corresponden a las herramientas a usar para implementar la funcio
 - **SCP**: Para transferir información a un archivo en otro dispositivo.
 - **Bash**: Para ejecutar el archivo que escribe en la otra máquina.
 - **Systemd**: Para ejecutar los servicios en segundo plano.
+
+## Escaneo y Envío por Serial
+
 
 
 ## Transferencia de archivos

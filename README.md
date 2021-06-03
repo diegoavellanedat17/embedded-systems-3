@@ -2,7 +2,7 @@
 
 > A continuación se explica el proyecto a grandes rasgos y en las posteriores secciones se entrará más en detalle. El objetivo del sistema es consolidar los datos del escaneo de dispositivos BLE que se encuentran haciendo "advertising" (anunciando su presencia) en el área de cobertura de nuestro dispositivo central. El funcionamiento es el siguiente: 
 >La RPi Zero: Se encuentra conectada a través del puerto serial a un ESP32 el cual esta escaneando dispositivos BLE en una ventana de tiempo de 5 segundos. Este envía una trama en formato JSON de los dispositivos escaneados junto con el RSSI asociado. La RPI Zero tiene 2 servicios, el primero es el encargado de to  
-
+![alt text](https://github.com/diegoavellanedat17/embedded-systems-3/blob/master/portadaFinal.JPG)
 
 > En el siguiente diagrama de se representan los elementos para el proyecto final. Los tags el RSSI del enlace y el hardware que los escanea se tomará como un bloque y se simularán
 las tramas, estas se envian de manera serial al la RPI. Una vez recibidas las tramas en se ingresan en en una cola para ejecutar en procesos independientes. Allí se realiza el procesamiento 

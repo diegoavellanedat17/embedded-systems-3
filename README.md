@@ -7,6 +7,10 @@ La RPi Zero: Se encuentra conectada a través del puerto serial a un ESP32 el cu
 
 La segunda Raspberry tiene un servicio que identifica si tiene archivos nuevos, en caso de que existan, primero desencripta la llave simetrica con la llave publica asimetrica y posteriormente con la llave simetrica decifrada, desencripta el archivo y hace append a un archivo llamado ble_data.txt
 
+## VIDEO DEL PROYECTO
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/tXbs2OFO7R8/0.jpg)](https://www.youtube.com/watch?v=tXbs2OFO7R8)
+
 
 
 

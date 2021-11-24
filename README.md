@@ -7,6 +7,10 @@ La RPi Zero: Se encuentra conectada a través del puerto serial a un ESP32 el cu
 
 La segunda Raspberry tiene un servicio que identifica si tiene archivos nuevos, en caso de que existan, primero desencripta la llave simetrica con la llave publica asimetrica y posteriormente con la llave simetrica decifrada, desencripta el archivo y hace append a un archivo llamado ble_data.txt
 
+## VIDEO DEL PROYECTO
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/tXbs2OFO7R8/0.jpg)](https://www.youtube.com/watch?v=tXbs2OFO7R8)
+
 
 
 
@@ -32,7 +36,34 @@ Los siguientes corresponden a las herramientas a usar para implementar la funcio
 
 ## Escaneo y Envío por Serial
 
+El probrama que se carga en el ESP32 se encuentra en la carpeta BLE Scanner (usando un ESP32 Wrover debe cargarse con el FTDI).
 
+La conexión serial entre el ESP32 y la Raspberry Pi Zero debe ser como se muestra en la siguiente imagen. 
+
+![alt text](https://github.com/diegoavellanedat17/embedded-systems-3/blob/master/circuito.JPG)
+
+## Servicio de BLE_scanner
+
+Este corresponde al servicio que corre en la Raspberry Pi Zero y ejecuta el script de python llamado scanner.py, debe activarse a través del siguiente comando 
+
+```
+sudo systemctl start BLE.service
+```
+
+## Servicio de Envío de información
+
+Este corresponde al servicio que corre en la Raspberry Pi Zero y ejecuta el script de BASH llamdo filesTransferir.sh que toma los archivos de la carpeta, encripta y envía
+
+```
+sudo systemctl start scanner.service
+```
+## Servicio de desencripción de datos
+
+Este corresponde al servicio que corre en la Raspberry Pi 3 y ejecuta el script de BASH llamado decrypt_check.sh que toma los archivos encriptados, y hace append en el archivo ble_data.txt
+
+```
+sudo systemctl start scanner.service
+```
 
 ## Transferencia de archivos
 Para la transferencia de archivos se haace a través del envío usando el comando scp entre los dos sistemas, para esto es necesario habilitar las claves y permitir la transferencia sin necesidad de la autenticación, esto se hace a través de los siguientes comandos. 
@@ -63,4 +94,6 @@ openssl genrsa -out private.pem 512
 $openssl rsa -in private.pem -out public.pem -outform PEM -pubout
 
 ```
-Luego se copia la llave pública en el transmisor
+Luego se copia la llave pública en el transmisor para la encriptación de la llave simetrica. 
+
+

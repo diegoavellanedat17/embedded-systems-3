@@ -19,27 +19,31 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     global rssi_vector
     payload = msg.payload.decode("utf-8")
+    #print(f'Topic {msg.topic} ---> Payload {msg.payload}')
     #payload = payload.replace("\\", "")
-    payload = json.loads(payload)
-    topic = msg.topic
-    now = datetime.now()
-    station_number = re.findall(r'[0-9]|$', topic)[0]
-    tags_tupple = get_tags(payload)
-    for tag_info in tags_tupple:
-        if rssi_vector[tag_info[0]-1][int(station_number)-1] != 0:
-            print('dato repetido')
-        else:
-            rssi_vector[tag_info[0]-1][int(station_number)-1] = tag_info[1]
-            complete_count = 0
-            for i in range(0, 3):
-                if not is_zero(rssi_vector[i]):
-                    complete_count = complete_count + 1
-            if complete_count == 3:
-                print('complete vector')
-                print(rssi_vector, time_map(datetime.now()))
+    try:
+        payload = json.loads(payload)
+        topic = msg.topic
+        now = datetime.now()
+        station_number = re.findall(r'[0-9]|$', topic)[0]
+        tags_tupple = get_tags(payload)
+        for tag_info in tags_tupple:
+            if rssi_vector[tag_info[0]-1][int(station_number)-1] != 0:
+                print('dato repetido')
+            else:
+                rssi_vector[tag_info[0]-1][int(station_number)-1] = tag_info[1]
+                complete_count = 0
                 for i in range(0, 3):
-                    save_data(f'TAG{i+1}.txt', f'{rssi_vector[i]},{time_map(datetime.now())}')
-                rssi_vector = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+                    if not is_zero(rssi_vector[i]):
+                        complete_count = complete_count + 1
+                if complete_count == 3:
+                    print('complete vector')
+                    print(rssi_vector, time_map(datetime.now()))
+                    for i in range(0, 3):
+                        save_data(f'TAG{i+1}.txt', f'{rssi_vector[i]},{time_map(datetime.now())}')
+                    rssi_vector = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+    except:
+        print('algo raro')
 
 
 def save_data(filename,line):
